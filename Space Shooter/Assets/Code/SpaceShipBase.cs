@@ -18,8 +18,10 @@ namespace SpaceShooter
 		// in order to make it editable inside the editor.
 		[SerializeField]
 		private float _speed = 1.5f;
+        [SerializeField]
+        private int _lives = 1;
 
-		private Weapon[] _weapons;
+        private Weapon[] _weapons;
 
 		// A property for accessing _speed variable. Getter is set public so the value
 		// can be read anywhere. Setter is protected which means that the value can be

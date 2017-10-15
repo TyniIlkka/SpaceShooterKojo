@@ -36,6 +36,10 @@ namespace SpaceShooter
 		{
 			// CurrentHealth = CurrentHealth - amount;
 			CurrentHealth -= amount;
+            if(CurrentHealth <= _minHealth)
+            {
+                PlayerDeath();
+            }
 		}
 
 		public void IncreaseHealth(int amount)
