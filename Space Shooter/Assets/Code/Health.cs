@@ -8,7 +8,7 @@ namespace SpaceShooter
 		[SerializeField] private int _minHealth;
 		[SerializeField] private int _maxHealth;
 
-		private int _currentHealth;
+		[SerializeField] private int _currentHealth;
 
 		public int CurrentHealth
 		{
@@ -27,7 +27,15 @@ namespace SpaceShooter
 			get { return CurrentHealth == _minHealth; }
 		}
 
-		protected void Awake()
+        public int InitialHealth
+        {
+            get
+            {
+                return _initialHealth;
+            }
+        }
+
+        protected void Awake()
 		{
 			CurrentHealth = _initialHealth;
 		}
@@ -36,10 +44,7 @@ namespace SpaceShooter
 		{
 			// CurrentHealth = CurrentHealth - amount;
 			CurrentHealth -= amount;
-            if(CurrentHealth <= _minHealth)
-            {
-                PlayerDeath();
-            }
+            
 		}
 
 		public void IncreaseHealth(int amount)

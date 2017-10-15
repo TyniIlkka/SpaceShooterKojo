@@ -11,28 +11,24 @@ namespace SpaceShooter
 			get; private set;
 		}
 
-		[SerializeField]
-		private Spawner _enemySpawner;
+        //PlayerSpawner
+        [SerializeField] private Spawner _playerSpawner;
+        [SerializeField] private int _maxPlayerUnits;
+        [SerializeField] private int reSpawnDelay;
 
-		[SerializeField]
-		private GameObject[] _enemyMovementTargets;
+        private PlayerSpaceShip playerShip;
+        private bool alive;
 
-		// How often we should spawn a new enemy.
-		[SerializeField]
-		private float _spawnInterval = 1;
+        //EnemySpawner
+        [SerializeField] private Spawner _enemySpawner;
+		[SerializeField] private GameObject[] _enemyMovementTargets;
+		[SerializeField] private float _spawnInterval = 1; // How often we should spawn a new enemy.
+        [SerializeField, Tooltip("The time before the first spawn.")] private float _waitToSpawn;
+		[SerializeField] private int _maxEnemyUnitsToSpawn; // Maximum amount of enemies to spawn.
 
-		[SerializeField, Tooltip("The time before the first spawn.")]
-		private float _waitToSpawn;
-
-		// Maximum amount of enemies to spawn.
-		[SerializeField]
-		private int _maxEnemyUnitsToSpawn;
-
-		[SerializeField]
-		private GameObjectPool _playerProjectilePool;
-
-		[SerializeField]
-		private GameObjectPool _enemyProjectilePool;
+        //Projectile Pools
+        [SerializeField] private GameObjectPool _playerProjectilePool;
+		[SerializeField] private GameObjectPool _enemyProjectilePool;
 
 		// Amount of enemies spawned so far.
 		private int _enemyCount;
@@ -54,15 +50,23 @@ namespace SpaceShooter
 				//_enemySpawner = GameObject.FindObjectOfType<Spawner>();
 				_enemySpawner = GetComponentInChildren<Spawner>();
 			}
+
+            if(_playerSpawner == null)
+            {
+                Debug.Log("No reference to an player spawner.");
+                _playerSpawner = GetComponentInChildren<Spawner>();
+            }
 		}
 
 		protected void Start()
 		{
+            // Starts a new coroutine.
+            PlayerSpawnRoutine();
 			// Starts a new coroutine.
-			StartCoroutine(SpawnRoutine());
+			StartCoroutine(EnemySpawnRoutine());
 		}
 
-		private IEnumerator SpawnRoutine()
+		private IEnumerator EnemySpawnRoutine()
 		{
 			// Wait for a while before spawning the first enemy.
 			yield return new WaitForSeconds(_waitToSpawn);
@@ -83,6 +87,28 @@ namespace SpaceShooter
 				yield return new WaitForSeconds(_spawnInterval);
 			}
 		}
+
+        private void PlayerSpawnRoutine()
+        {
+            if (playerShip == null)
+            {
+                alive = false;
+            }
+            if (!alive)
+            {
+                SpawnPlayer();
+                alive = true;
+            }
+            
+        }
+        // 
+        private PlayerSpaceShip SpawnPlayer()
+        {
+                GameObject spawnedPlayerObject = _playerSpawner.Spawn();
+
+                playerShip = spawnedPlayerObject.GetComponent<PlayerSpaceShip>();
+                return playerShip;
+        }
 
 		private EnemySpaceShip SpawnEnemyUnit()
 		{

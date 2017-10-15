@@ -120,6 +120,7 @@ MonoBehaviour:
   _initialHealth: 50
   _minHealth: 0
   _maxHealth: 100
+  _currentHealth: 0
 --- !u!114 &114426938728076154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,6 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _lives: 10
+  _respawnTimer: 3
+  coll: {fileID: 0}
+  rend: {fileID: 0}
 --- !u!212 &212824809356921158
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -175,8 +180,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2063397315
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300012, guid: 8d18f6d2b73e89b4882fbf3bb5aedb4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

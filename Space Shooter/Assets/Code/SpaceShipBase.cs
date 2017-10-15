@@ -18,8 +18,6 @@ namespace SpaceShooter
 		// in order to make it editable inside the editor.
 		[SerializeField]
 		private float _speed = 1.5f;
-        [SerializeField]
-        private int _lives = 1;
 
         private Weapon[] _weapons;
 
@@ -32,7 +30,7 @@ namespace SpaceShooter
 			protected set { _speed = value; }
 		}
 
-		public Weapon[] Weapons
+        public Weapon[] Weapons
 		{
 			get { return _weapons; }
 		}
@@ -55,6 +53,7 @@ namespace SpaceShooter
 				// Initialize all the weapons.
 				weapon.Init(this);
 			}
+
 
 			Health = GetComponent<IHealth>();
 		}
@@ -99,7 +98,7 @@ namespace SpaceShooter
 			if (Health.IsDead)
 			{
 				Die();
-			}
+            }
 		}
 
 		protected virtual void Die()
